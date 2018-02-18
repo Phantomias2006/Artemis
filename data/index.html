@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-title" content="WlanThermo">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<link rel="apple-touch-icon-precomposed" href="https://raw.githubusercontent.com/WLANThermo-nano/WLANThermo_nano_Logos/master/apple-touch-icon-180x180-precomposed.png" >
+	<!-- <link rel="apple-touch-startup-image" href="startupimagename.png" > -->
+    <title>WLANThermo - Nano</title>
+	<link href="style.css" rel="stylesheet" type="text/css">
+	<script src="jquery.min.js"></script>
+</head>
+<body>
+
+<div id="layout">
+	<div class="headmenu">
+		<!-- Menu toggle -->
+		<a href="#menu" id="menuLink" class="menu-link">
+			<!-- Hamburger icon -->
+			<span></span>
+		</a>
+		<div id="thermoname">N.C.</div>
+		<div class="battery" onclick="setshowBatteryWlanIcon();">N.C.</div>
+		<div class="wifi" onclick="setshowBatteryWlanIcon();">N.C.</div>
+		<div class="notification" style="display:none" onclick="update();"><span class="icon-notification"> </span></div>
+	</div>
+	<div class="clear"></div>
+    <div id="menu">
+        <div class="pure-menu custom-restricted-width">
+			<a class="pure-menu-heading" href="javascript:showIndex()">
+				<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAAA+CAMAAADOHANyAAABy1BMVEVHcEz////LtrjCo6T+/v67
+						srLmGSX18/Pk5OT////////////19fX9/f3+/v76+vrs7Oz7+/vkMDr+/v77+/vkCxj///+8vLzc
+						3Nz8/Pzx8fH8/Pz9/f3v7+/+/v77+/vp6en6+vrk5OTt7e3////7+/vx8fH39/f7+/v8/Pzv7+/0
+						9PTkDxzb29vz8fH7+/v+/v74+Pjy8vL7+/v6+vr9/f3a2tr////+/v76+fn8/Pz5+fnkCRb4+Pj8
+						/Pz19fX8/Pz9/f3kCxjlEh75+fnu7u7kChb7+/vkDRr5+fn09PT8/Pz29vba2tr6+vr8/Pzs7Oz8
+						/Pz39/f9/f37+/vkDBnkCRblER3v7+/v7+/+/v7kBxT6+vrpOELz8/P8/PzlDxz6+vroLDfq6ur5
+						+fn39/f29vb8/Pz////kEyDrRlDnIy/lDRr////////kDBj////kBxToMz3z8/PlEyDlGCPkChf3
+						9/f////lEh/lFSH4+PjlFSHnIS3kDRrkCxjkChflEBz////lDhrkDBjlHyvkCxj39/flFyPu7u7m
+						GyfkDRnlEyDlFSH////oc3r////pXGTnKTTywcTzxMfrT1jsgIb////kBhPe/hkIAAAAl3RSTlMA
+						zQMC/QE8SBT+fPpg5PhSDB/L3XPKkBsH3i6W7WqBohqTKDIUvhxkr8kOTXQJN7P0cDSqiPEEjraP
+						23nsa+OqzOnglJ0k8qWofUS7UAuFxBHPV9a4tfhbKidL/vkLO9R+ixYXgklB2Z6EBxyuSFXGKfsR
+						PW5C2j50Y0xbVyac1OaMXKK7NszGRzwsv1NQyl7LiDN1jxiQLUfRqQAACeRJREFUeF7tmGlXG0cW
+						hu9IaiMs1IiEZATSBBQCSGBAGKQZNgWZfbMABIYQA9gYAraTeMGOl3gZL4m3yWS2l587fau6qlsg
+						nUM44VueD5xbatT16tbduunUub1/7sm7e/2rBweroxe+G994f51KUh25qUyjaZoUVyOREBF9FjlP
+						RzD6PORiIEwuvJHIVVIYr3Zf3zo4zIUXjy9TUbqR1/bWuqHMZvSSxceopCNsF374jzGDHNLl+Jwk
+						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" 
+				alt="WLANThermo" height="58" width="130"> 
+			</a>
+            <ul class="pure-menu-list">
+                <li id="menuHome" class="pure-menu-item"><a href="javascript:showIndex()" class="pure-menu-link">Home</a></li>
+				<li id="menuWlan" class="pure-menu-item"><a href="javascript:showWLAN()" class="pure-menu-link">WLAN</a></li>
+				<li id="menuSystem" class="pure-menu-item"><a href="javascript:showSystem()" class="pure-menu-link">System</a></li>
+				<li id="menuPitmaster" class="pure-menu-item"><a href="javascript:showPitmaster()" class="pure-menu-link">Pitmaster</a></li>
+				<li id="menuThingspeak" class="pure-menu-item"><a href="javascript:showThingspeak()" class="pure-menu-link">IoT</a></li>
+				<li id="menuNotification" class="pure-menu-item"><a href="javascript:showPushNotification()" class="pure-menu-link">Push Notification</a></li>
+                <li id="menuAbout" class="pure-menu-item"><a href="javascript:showAbout()" class="pure-menu-link">Über</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="main">
+        <div class="header">
+            <h1>WLANThermo - Nano</h1>
+        </div>
+		<!-- ################################################### -->
+        <div id="index" class="content" class="hidden" style="display:none">
+            <div class="pure-g">
+                <div class="pure-u-1-1 pure-u-md-1-2 pure-u-xl-1-4 temp_index" onclick="showSetChannel('0')">
+					<div class="1-box channel">
+						<div class="chtitle"></div>
+						<div class="chnumber"></div>
+						<div class="tempadjust">
+							<div class="tempmax"></div>
+							<div class="tempmin"></div>
+						</div>
+						<div class="temp"></div>
+						<div class="clear"></div>
+					</div>
+                </div>
+                <div class="pure-u-1-1 pure-u-md-1-2 pure-u-xl-1-4 temp_index" onclick="showSetChannel('1')">
+					<div class="1-box channel">
+						<div class="chtitle"></div>
+						<div class="chnumber"></div>
+						<div class="tempadjust">
+							<div class="tempmax"></div>
+							<div class="tempmin"></div>
+						</div>
+						<div class="temp"></div>
+						<div class="clear"></div>
+					</div>
+                </div>
+                <div class="pure-u-1-1 pure-u-md-1-2 pure-u-xl-1-4 temp_index" onclick="showSetChannel('2')">
+					<div class="1-box channel">
+						<div class="chtitle"></div>
+						<div class="chnumber"></div>
+						<div class="tempadjust">
+							<div class="tempmax"></div>
+							<div class="tempmin"></div>
+						</div>
+						<div class="temp"></div>
+						<div class="clear"></div>
+					</div>
+                </div>
+                <div class="pure-u-1-1 pure-u-md-1-2 pure-u-xl-1-4 temp_index" onclick="showSetChannel('3')">
+					<div class="1-box channel">
+						<div class="chtitle"></div>
+						<div class="chnumber"></div>
+						<div class="tempadjust">
+							<div class="tempmax"></div>
+							<div class="tempmin"></div>
+						</div>
+						<div class="temp"></div>
+						<div class="clear"></div>
+					</div>
+                </div>
+                <div class="pure-u-1-1 pure-u-md-1-2 pure-u-xl-1-4 temp_index" onclick="showSetChannel('4')">
+					<div class="1-box channel">
+						<div class="chtitle"></div>
+						<div class="chnumber"></div>
+						<div class="tempadjust">
+							<div class="tempmax"></div>
+							<div class="tempmin"></div>
+						</div>
+						<div class="temp"></div>
+						<div class="clear"></div>
+					</div>
+                </div>
+                <div class="pure-u-1-1 pure-u-md-1-2 pure-u-xl-1-4 temp_index" onclick="showSetChannel('5')">
+					<div class="1-box channel">
+						<div class="chtitle"></div>
+						<div class="chnumber"></div>
+						<div class="tempadjust">
+							<div class="tempmax"></div>
+							<div class="tempmin"></div>
+						</div>
+						<div class="temp"></div>
+						<div class="clear"></div>
+					</div>
+                </div>
+                <div class="pure-u-1-1 pure-u-md-1-2 pure-u-xl-1-4 temp_index" onclick="showSetChannel('6')">
+					<div class="1-box channel">
+						<div class="chtitle"></div>
+						<div class="chnumber"></div>
+						<div class="tempadjust">
+							<div class="tempmax"></div>
+							<div class="tempmin"></div>
+						</div>
+						<div class="temp"></div>
+						<div class="clear"></div>
+					</div>
+                </div>
+                <div class="pure-u-1-1 pure-u-md-1-2 pure-u-xl-1-4 temp_index" onclick="showSetChannel('7')">
+					<div class="1-box channel">
+						<div class="chtitle"></div>
+						<div class="chnumber"></div>
+						<div class="tempadjust">
+							<div class="tempmax"></div>
+							<div class="tempmin"></div>
+						</div>
+						<div class="temp"></div>
+						<div class="clear"></div>
+					</div>
+                </div>
+            </div>
+        </div>
+		<!-- ################################################### -->
+		<div id="wlan_config" class="content" style="display:none">
+			<table class="table_nav" cellpadding="0" cellspacing="0" width="100%" border="0">
+				<tr>
+				  <td><span onclick="showIndex()"><span class="icon-arrow_left"></span>Zurück</span></td>
+				  <td></td>
+				</tr>
+			</table>
+			<div class="float-left text-align-left"><h3 class="headtitle">WLAN Einstellungen</h3></div>
+			<div class="float-right text-align-right"><span onclick="setHelpBox('WLAN Einstellungen',help_wifi)" class="icon-question_sign"></span></div>
+			<div style="clear:both;"></div>
+			<div class="pure-g">
+				<div class="pure-u-1-1 pure-u-lg-1-1">
+					<div class="1-box wlan_conf">	
+						<div class="checkbox">
+						  <label>
+							<input id="wlan_active" onclick="wlan_active();" type="checkbox" checked/><i class="helper"></i>WLAN aktivieren
+						  </label>
+						</div>
+						<hr id="hr_wifi" style="display:none"/>
+						<table id="networkconnect" class="wlantable" width="100%">
+							<!--Netzwerkliste -->
+						</table> 
+						<hr />
+						 <table width="100%">
+							<tr>
+								<td align="left"><h3>Netzwerk wählen...</h3></td>
+								<td id="networkrefresh" align="right"></td>
+							</tr>
+						</table> 		
+						<table id="networklist" class="wlantable" width="100%">
+								<!--Netzwerkliste -->
+						</table>
+						<hr />
+						<p class="pure-button pure-button-primary" onclick="clearWifi();">Netzwerkverbindungsdaten löschen</p>
+					</div>
+				</div>
+			</div>
+        </div>
+		<!-- ################################################### -->
+		<div id="wlan_set" class="content" style="display:none">
+			<table class="table_nav" cellpadding="0" cellspacing="0" width="100%" border="0">
+				<tr>
+				  <td><span onclick="showWLAN()"><span class="icon-arrow_left"></span>Zurück</span></td>
+				  <td><span onclick="setWLAN(document.getElementsByName('ssidInput')[0].value, document.getElementsByName('ssidPasswordInput')[0].value)">Speichern<span class="icon-arrow_right"></span></span></td>
+				</tr>
+			</table>
+			<h3 class="headtitle">Netzwerk Verbinden</h3>
+			<div class="pure-g">
+				<div class="pure-u-1-1 pure-u-lg-1-1">
+					<div class="1-box channel_conf">
+						<form>							
+							<div class="form-group">
+							  <input name="ssidInput" type="text" onkeyup="setssidInput();"maxlength="32" required="required"/>
+							  <label class="control-label" for="input">SSID</label><i class="bar"></i>
+							</div>			
+							<div class="form-group">
+							  <input name="ssidPasswordInput" type="password" maxlength="63" required="required"/>
+							  <label class="control-label" for="input">Passwort</label><i class="bar"></i>
+							</div>	
+						</form>
+					</div>
+				</div>
+			</div>
+        </div>
+		<!-- ################################################### -->
+		<div id="pitmaster_settings" class="content" style="display:none">
+			<table class="table_nav" cellpadding="0" cellspacing="0" width="100%" border="0">
+				<tr>
+				  <td><span onclick="showIndex()"><span class="icon-arrow_left"></span>Zurück</span></td>
+				  <td><span onclick="setPitmaster();">Speichern<span class="icon-arrow_right"></span></span></td>
+				</tr>
+			</table>
+			<div class="float-left text-align-left"><h3 class="headtitle">Pitmaster Einstellungen</h3></div>
+			<div class="float-right text-align-right"><span onclick="setHelpBox('Pitmaster Einstellungen',help_pitmaster)" class="icon-question_sign"></span></div>
+			<div style="clear:both;"></div>
+			<div class="pure-g">
+				<div class="pure-u-1-1 pure-u-lg-1-1">
+					<div class="1-box channel_conf">
+						<form>
+							<div class="form-group">
+								<select id="pitmaster_typ" onchange="changePitmasterTyp();">
+									<option value="off">off</option>
+									<option value="auto">auto</option>
+									<option value="manual">manual</option>
+									<option value="autotune">autotune</option>
+								</select>
+								<label class="control-label" for="select">Pitmaster</label><i class="bar"></i>
+							</div>
+							<div id="pitmaster_profile_show">
+								<div class="form-group">
+									<select onchange="showPitmasterProfile(this.value);" id="pid_profile"><!-- Placeholder --></select>
+									<label class="control-label" onchange="changePitmasterView();" for="select">Profil</label></span><i class="bar"></i>
+									<span class="icon-pencil icon-form" onclick="togglePitmasterView();">
+								</div>					  
+							</div>
+							<div id="pitmaster_channel_show">
+								<div class="form-group">
+									<select id="pitmaster_channel"><!-- Placeholder --></select>
+									<label class="control-label" for="select">Kanal</label><i class="bar"></i>
+								</div>	
+							</div>
+							<div id="pitmaster_set_show">	
+								<div class="form-group">
+									<input type="text" id="pitmaster_set" maxlength="5" onkeyup="validateNumber(this,'1');" required="required"/>
+									<label class="control-label" for="input">Solltemperatur</label><i class="bar"></i>
+								</div>	
+							</div>
+							<div id="pitmaster_value_show">	
+								<div class="form-group">
+								  <input type="text" id="pitmaster_value" maxlength="3" onkeyup="validateNumber(this,'1');" required="required"/>
+								  <label class="control-label" for="input">Pitmaster-Wert (%)</label><i class="bar"></i>
+								</div>
+							</div>
+						</form>	
+					</div>
+				</div>
+			</div>
+		</div>	
+		
+		<div id="pitmaster_profile" class="content" style="display:none">
+			<table class="table_nav" cellpadding="0" cellspacing="0" width="100%" border="0">
+				<tr>
+				  <td><span onclick="backPidProfile();"><span class="icon-arrow_left"></span>Zurück</span></td>
+				  <td><span onclick="setPitmasterProfile();">Speichern<span class="icon-arrow_right"></span></span></td>
+				</tr>
+			</table>	
+			<div id="aktorik_settings_show">
+				<h3 class="headtitle">Aktorik</h3>
+				<div class="pure-g">
+					<div class="pure-u-1-1 pure-u-lg-1-1">
+						<div class="1-box channel_conf">
+							<form>
+								<div class="form-group">
+								  <input type="text" id="pid_name" maxlength="12" required="required"/>
+								  <label class="control-label" for="input">Profil Name</label><i class="bar"></i>
+								</div>
+								<div class="form-group">
+									<select id="pitmaster_profile_aktor"></select>
+									<label class="control-label" onchange="" for="select">Aktor</label><i class="bar"></i>
+								</div>
+								<table class="table50" cellpadding="0" cellspacing="0" width="100%" border="0">
+									<tr>
+									  <td>
+										<div class="form-group">
+										  <input type="text" id="pid_DCmin" maxlength="4" onkeyup="validateNumber(this,'1');" required="required"/>
+										  <label class="control-label" for="input">DCmin [0-100%]</label><i class="bar"></i>
+										  <span class="icon-play icon-input" onclick="setDC('0');"></span>
+										</div>
+									  </td>
+									  <td>	
+										<div class="form-group">
+										  <input type="text" id="pid_DCmax" maxlength="4" onkeyup="validateNumber(this,'1');" required="required"/>
+										  <label class="control-label" for="input">DCmax [0-100%]</label><i class="bar"></i>
+										  <span class="icon-play icon-input" onclick="setDC('1');"></span>
+										</div>							  
+									  </td>
+									</tr>
+								</table>
+							</form>	
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="pid_settings_show">
+				<h3 class="headtitle">PID</h3>
+				<div class="pure-g">
+					<div class="pure-u-1-1 pure-u-lg-1-1">
+						<div class="1-box channel_conf">
+							<form>		
+								<table class="table33" cellpadding="0" cellspacing="0" width="100%" border="0">
+									<tr>
+									  <td>
+										<div class="form-group">
+										  <input type="text" id="pid_Kp" maxlength="10" onkeyup="validateNumber(this,'1');" required="required"/>
+										  <label class="control-label" for="input">Kp</label><i class="bar"></i>
+										</div>								  	  
+									  </td>
+									  <td>
+										<div class="form-group">
+										  <input type="text" id="pid_Ki" maxlength="10" onkeyup="validateNumber(this,'3');" required="required"/>
+										  <label class="control-label" for="input">Ki</label><i class="bar"></i>
+										</div>								    
+									  </td>
+									  <td>
+										<div class="form-group">
+										  <input type="text" id="pid_Kd" maxlength="10" onkeyup="validateNumber(this,'1');" required="required"/>
+										  <label class="control-label" for="input">Kd</label><i class="bar"></i>
+										</div>								  		  
+									  </td>
+									</tr>
+								</table>
+								<table class="table33" cellpadding="0" cellspacing="0" width="100%" border="0">
+									<tr>
+									  <td>
+										<div class="form-group">
+										  <input type="text" id="pid_Kp_a" maxlength="10" onkeyup="validateNumber(this,'1');" required="required"/>
+										  <label class="control-label" for="input">Kp_a</label><i class="bar"></i>
+										</div>
+									  </td>
+									  <td>
+										<div class="form-group">
+										  <input type="text" id="pid_Ki_a" maxlength="10" onkeyup="validateNumber(this,'3');" required="required"/>
+										  <label class="control-label" for="input">Ki_a</label><i class="bar"></i>
+										</div>
+									  </td>
+									  <td>
+										<div class="form-group">
+										  <input type="text" id="pid_Kd_a" maxlength="10" onkeyup="validateNumber(this,'1');" required="required"/>
+										  <label class="control-label" for="input">Kd_a</label><i class="bar"></i>
+										</div>
+									  </td>
+									</tr>
+								</table>
+							</form>	
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+		<!-- ################################################### -->
+		<div id="channel_settings" class="content" style="display:none">
+			<table class="table_nav" cellpadding="0" cellspacing="0" width="100%" border="0">
+				<tr>
+				  <td><span onclick="showIndex()"><span class="icon-arrow_left"></span>Zurück</span></td>
+				  <td><span id="channel_settings_save">Speichern<span class="icon-arrow_right"></span></span></td>
+				</tr>
+			</table>	
+			<div class="float-left text-align-left"><h3 id="channel_settings_headtitle" class="headtitle">N.C.</h3></div>
+			<div class="float-right text-align-right"><span onclick="setHelpBox('Kanal Einstellungen',help_channel)" class="icon-question_sign"></span></div>
+			<div style="clear:both;"></div>			
+            <div class="pure-g">
+				<div class="pure-u-1-1 pure-u-md-1-1 pure-u-lg-1-1">
+					<div class="1-box channel_conf">
+						<form>							
+							<div class="form-group">
+							  <input type="text" class="temp_input" id="channel_name" maxlength="10" required="required"/>
+							  <label class="control-label" for="input">Kanal Name</label><i class="bar"></i>
+							</div>
+							<div class="form-group">
+							  <input class="temp_input" id="temp_max" type="text" onkeyup="validateNumber(this,'1');" maxlength="6" required="required"/>
+							  <label class="control-label" for="input">Temp Max</label><i class="bar"></i>
+							</div>							
+							<div class="form-group">
+							  <input class="temp_input" id="temp_min" type="text" onkeyup="validateNumber(this,'1');" maxlength="6" required="required"/>
+							  <label class="control-label" for="input">Temp Min</label><i class="bar"></i>
+							</div>												
+							<div class="form-group">
+							  <select id="sensor">
+									<!-- Placeholder -->
+							  </select>
+							  <label class="control-label" for="select">Fühler</label><i class="bar"></i>
+							</div>	
+							<div class="form-group">
+							  <select id="color">
+								<option value="#5587A2">Niagara</option>
+								<option value="#FFAEC9">Rosa</option>
+								<option value="#0C4C88">Lapis Blue</option>
+								<option value="#EF562D">Orange</option>
+								<option value="#A349A4">Lila</option>
+								<option value="#ED1C24">Red</option>
+								<option value="#22B14C">Green</option>
+								<option value="#FFC100">Gold</option>
+								<option value="#5C7148">Kale</option>
+								<option value="#804000">Brown</option>
+							  </select>
+							  <label class="control-label" for="select">Farbe</label><i class="bar"></i>
+							</div>	
+							<div class="checkbox"><label><input id="pushalarm" type="checkbox" checked="checked"/><i class="helper"></i>Push Alarm</label></div>
+							<div class="checkbox"><label><input id="hwalarm" type="checkbox" checked="checked"/><i class="helper"></i>Summer Alarm</label></div>
+						</form>
+					</div>
+				</div>
+			</div>
+        </div>
+		<!-- ################################################### -->
+		<div id="system_config" class="content" style="display:none">
+			<!-- html for about-Site -->
+			<table class="table_nav" cellpadding="0" cellspacing="0" width="100%" border="0">
+				<tr>
+				  <td><span onclick="showIndex();"><span class="icon-arrow_left"></span>Zurück</span></td>
+				  <td><span onclick="setSystem();">Speichern<span class="icon-arrow_right"></span></span></td>
+				</tr>
+			</table>
+			<div class="float-left text-align-left"><h3 class="headtitle">System Einstellungen</h3></div>
+			<div class="float-right text-align-right"><span onclick="setHelpBox('System Einstellungen',help_settings)" class="icon-question_sign"></span></div>
+			<div style="clear:both;"></div>
+			<div class="pure-g">
+				<div class="pure-u-1-1 pure-u-md-1-1 pure-u-lg-1-1">
+					<div class="1-box channel_conf">
+						<form>							
+							<div class="form-group">
+							  <input type="text" id="hostname" maxlength="13" required="required"/>
+							  <label class="control-label" for="input">Hostname</label><i class="bar"></i>
+							</div>
+							<div class="form-group">
+							  <input type="text" id="apname" maxlength="13" required="required"/>
+							  <label class="control-label" for="input">AP-Name</label><i class="bar"></i>
+							</div>										
+							<div class="form-group">
+							  <select id="language">
+								<option value="de">Deutsch</option>
+							  </select>
+							  <label class="control-label" for="select">Sprache</label><i class="bar"></i>
+							</div>							
+							<div class="form-group">
+							  <select id="unit">
+								<option value="C">Celsius</option>
+								<option value="F">Fahrenheit</option>
+							  </select>
+							  <label class="control-label" for="select">Einheit</label><i class="bar"></i>
+							</div>	
+							<div class="form-group">
+							  <select id="hwversion"></select><label class="control-label" for="select">Hardwareversion</label><i class="bar"></i>
+							</div>
+							<div class="checkbox"><label><input id="fastmode" type="checkbox"/><i class="helper"></i>Schnelllauf</label></div>
+							<div class="checkbox"><label><input id="searchUpdate" type="checkbox"/><i class="helper"></i>Nach Updates suchen</label></div>								
+						</form>
+					</div>
+				</div>
+			</div>
+        </div>
+		<!-- ################################################### -->
+		<div id="extended_settings" class="content" style="display:none">
+			<!-- html for about-Site -->
+			<table class="table_nav" cellpadding="0" cellspacing="0" width="100%" border="0">
+				<tr>
+				  <td><span onclick="showIndex();"><span class="icon-arrow_left"></span>Zurück</span></td>
+				  <td><span onclick="">Speichern<span class="icon-arrow_right"></span></span></td>
+				</tr>
+			</table>
+			<h3 class="headtitle">Extended settings</h3>
+			<div class="pure-g">
+				<div class="pure-u-1-1 pure-u-md-1-1 pure-u-lg-1-1">
+					<div class="1-box channel_conf">
+						<form>							
+							<p class="pure-button pure-button-primary" onclick="restart();">Restart Nano</p>
+							<p class="pure-button pure-button-primary" onclick="sethwversion();">Set V2</p>
+						</form>
+					</div>
+				</div>
+			</div>
+        </div>
+		<!-- ################################################### -->
+
+		<div id="thingspeak" class="content" style="display:none">
+			<table class="table_nav" cellpadding="0" cellspacing="0" width="100%" border="0">
+				<tr>
+				  <td><span onclick="showIndex();"><span class="icon-arrow_left"></span>Zurück</span></td>
+				  <td><span onclick="setThingspeak();">Speichern<span class="icon-arrow_right"></span></span></td>
+				</tr>
+			</table>
+			<div class="float-left text-align-left"><h3 class="headtitle">Nano Cloud</h3></div>
+			<div class="float-right text-align-right"><span onclick="setHelpBox('Nano Cloud',help_cloud)" class="icon-question_sign"></span></div>
+			<div style="clear:both;"></div>
+			<div class="pure-g">
+				<div class="pure-u-1-1 pure-u-lg-1-1">
+					<div class="1-box channel_conf">
+						<form>
+							<div class="checkbox">
+							  <label>
+								<input id="CLon" type="checkbox" checked="checked"/><i class="helper"></i>Nano Cloud aktivieren
+							  </label>
+							</div>
+							<div class="form-group">
+							  <select id="CLinterval">
+								<option value="15">15 Sekunden</option>
+								<option value="30">30 Sekunden</option>
+								<option value="60">1 Minute</option>
+								<option value="120">2 Minuten</option>
+								<option value="300">5 Minuten</option>
+							  </select>
+							  <label class="control-label" for="select">Sendeintervall</label><i class="bar"></i>
+							</div>						
+							<div class="form-group">
+							  <label for="input"><a id="CLtoken" class="link" href="#"></a></label><i class="bar"></i>
+							</div>							
+							<p class="pure-button pure-button-primary" onclick="newToken();">Token generieren</p>
+						</form>
+					</div>
+				</div>
+			</div>		
+			<div id="thingsheader">
+				<div class="float-left text-align-left"><h3 class="headtitle">Thingspeak</h3></div>
+				<div class="float-right text-align-right"><span onclick="setHelpBox('Thingspeak',help_thingspeak)" class="icon-question_sign"></span></div>
+				<div style="clear:both;"></div>
+				<div class="pure-g">
+					<div class="pure-u-1-1 pure-u-lg-1-1">
+						<div class="1-box channel_conf">
+							<form>							
+							  <div class="checkbox">
+							    <label>
+								  <input id="TSon" type="checkbox" checked="checked"/><i class="helper"></i>Thingspeak aktivieren
+							    </label>
+							  </div>
+							  <div class="form-group">
+							    <input type="text" id="TSwrite" maxlength="26" required="required"/>
+							    <label class="control-label" for="input">Channel Write API Key</label><i class="bar"></i>
+							  </div>
+							  <div class="form-group">
+							    <input type="text" id="TShttp" maxlength="26" required="required"/>
+							    <label class="control-label" for="input">ThingHTTP API Key</label><i class="bar"></i>
+							  </div>
+							  <div class="form-group">
+							    <input type="text" id="TSchID" maxlength="26" required="required"/>
+							    <label class="control-label" for="input">Channel ID</label><i class="bar"></i>
+							  </div>
+							  <div class="form-group">
+							    <select id="TSinterval">
+								  <option value="30">30 Sekunden</option>
+								  <option value="60">1 Minute</option>
+								  <option value="120">2 Minuten</option>
+								  <option value="300">5 Minuten</option>
+							    </select>
+							    <label class="control-label" for="select">Sendeintervall</label><i class="bar"></i>
+							  </div>
+							  <div class="checkbox">
+							    <label>
+								  <input id="TSshow8" type="checkbox" checked="checked"/><i class="helper"></i>Batterieladezustand anstatt CH8
+							    </label>
+							  </div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="mqttheader">
+				<div class="float-left text-align-left"><h3 class="headtitle">Private MQTT Client</h3></div>
+				<div class="float-right text-align-right"><span onclick="setHelpBox('Private MQTT Client',help_mqtt)" class="icon-question_sign"></span></div>
+				<div style="clear:both;"></div>
+				<div class="pure-g">
+					<div class="pure-u-1-1 pure-u-lg-1-1">
+						<div class="1-box channel_conf">
+							<form>							
+							  <div class="checkbox">
+							    <label>
+								  <input id="PMQon" type="checkbox" checked="checked"/><i class="helper"></i>Private MQTT aktivieren
+							    </label>
+							  </div>
+							  <table class="table50" cellpadding="0" cellspacing="0" width="100%" border="0">
+								  <tr>
+								    <td>
+									  <div class="form-group">
+										  <input type="text" id="PMQhost" maxlength="26" required="required"/>
+										  <label class="control-label" for="input">MQTT Host</label><i class="bar"></i>
+									  </div>
+								    </td>
+								    <td>
+									  <div class="form-group">
+										  <input type="text" id="PMQport" maxlength="26" required="required"/>
+										  <label class="control-label" for="input">MQTT Port</label><i class="bar"></i>
+									  </div>
+								    </td>
+								  </tr>
+								  <tr>
+								    <td>
+									  <div class="form-group">
+										  <input type="text" id="PMQuser" maxlength="26" required="required"/>
+										  <label class="control-label" for="input">MQTT User</label><i class="bar"></i>
+									  </div>
+								    </td>
+								    <td>
+									  <div class="form-group">
+										  <input type="text" id="PMQpass" maxlength="26" required="required"/>
+										  <label class="control-label" for="input">MQTT Password</label><i class="bar"></i>
+									  </div>
+								    </td>
+								  </tr>
+								  <tr>
+								    <td>
+									  <div class="form-group">
+									    <select id="PMQinterval">
+										  <option value="10">10 Sekunden</option>
+										  <option value="30">30 Sekunden</option>
+										  <option value="60">1 Minute</option>
+										  <option value="120">2 Minuten</option>
+										  <option value="300">5 Minuten</option>
+									    </select>
+									    <label class="control-label" for="select">Sendeintervall</label><i class="bar"></i>
+									  </div>
+								    </td>
+								    <td>	
+									  <div class="form-group">
+									    <select id="PMQqos">
+										  <option value="0">0</option>
+										  <option value="1">1</option>
+										  <option value="2">2</option>
+									    </select>
+									    <label class="control-label" for="select">QoS</label><i class="bar"></i>
+									  </div>
+								    </td>
+								  </tr>
+							  </table>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+        </div>
+		<!-- ################################################### -->
+		<div id="push_notification" class="content" style="display:none">
+			<!-- html for thingspeak-Site -->
+			<table class="table_nav" cellpadding="0" cellspacing="0" width="100%" border="0">
+				<tr>
+				  <td><span onclick="showIndex();"><span class="icon-arrow_left"></span>Zurück</span></td>
+				  <td><span onclick="setPushNotification();">Speichern<span class="icon-arrow_right"></span></span></td>
+				</tr>
+			</table>
+			<div class="float-left text-align-left"><h3 class="headtitle">Push Einstellungen</h3></div>
+			<div class="float-right text-align-right"><span onclick="setHelpBox('Push Einstellungen',help_notification)" class="icon-question_sign"></span></div>
+			<div style="clear:both;"></div>
+			<div class="pure-g">
+				<div class="pure-u-1-1 pure-u-lg-1-1">
+					<div class="1-box channel_conf">
+						<form>	
+							<div class="checkbox">
+							  <label>
+								<input id="TGon" type="checkbox" checked="checked"/><i class="helper"></i>Push-Dienst aktivieren
+							  </label>
+							</div>						
+							<div class="form-group">
+							  <input type="text" class="temp_input" id="TGtoken" maxlength="50" required="required"/>
+							  <label class="control-label" for="input">API Token/Key</label><i class="bar"></i>
+							</div>
+							<div class="form-group">
+							  <input type="text" class="temp_input" id="TGid" maxlength="30" required="required"/>
+							  <label class="control-label" for="input">Chat ID / User Key</label><i class="bar"></i>
+							</div>
+							<p class="pure-button pure-button-primary" onclick="sendPushNotification();">Testnachricht senden</p>
+							<!-- <a class="pure-button" href="" onclick="getChatID();">A Pure Button</a> -->
+							<!-- <p class="pure-button pure-button-primary" onclick="getChatID();">ChatID ermitteln</p> -->
+							<!-- <button class="" onSubmit="return false;">A Primary Button</button>														 -->
+						</form>
+					</div>
+				</div>
+			</div>
+        </div>
+		<!-- ################################################### -->
+		<div id="about" class="content" style="display:none">
+			<table class="table_nav" cellpadding="0" cellspacing="0" width="100%" border="0">
+				<tr>
+				  <td><span onclick="showIndex();"><span class="icon-arrow_left"></span>Zurück</span></td>
+				  <td></td>
+				</tr>
+			</table>
+			<h3 class="headtitle">WlanThermo Team</h3>
+			<div class="pure-g">
+				<div class="pure-u-1-1  pure-u-md-1-1 pure-u-lg-1-1">
+					<div class="1-box channel_conf">
+						<table>
+							<tr><td>&#10032;&nbsp;Armin Thinnes</td></tr>
+							<tr><td>&#10032;&nbsp;Björn Schrader</td></tr>
+							<tr><td>&#10032;&nbsp;Alexander Schäfer</td></tr>
+							<tr><td>&#10032;&nbsp;Steffen Ochs</td></tr>
+							<tr><td onclick="touchStart();">&#10032;&nbsp;Florian Riedl</td></tr>
+							<tr><td>&#10032;&nbsp;Maik Kaste</td></tr>
+						</table>
+					</div>
+				</div>
+			</div>
+        </div>
+		<!-- ################################################### -->
+		<div id="helpBox" class="helpBox">
+			<!-- helpBox content -->
+			<div class="helpBox-content">
+				<div class="helpBox-header">
+					<span class="close" onclick="byId('helpBox').style.display='none'">&times;</span>
+					<h2 id="helpBoxTitle">Title</h2>
+				</div>
+				<div id="helpBoxObject" class="helpBox-body">
+				<!-- Placeholder -->
+				</div>
+			</div>
+		</div>
+		<!-- ################################################### -->		
+    </div>
+</div>
+<div id="cover">
+	<div id="spinner"></div>
+</div>
+<script src="function.js"></script>
+</body>
+</html>
